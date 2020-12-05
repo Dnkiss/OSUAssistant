@@ -3,8 +3,8 @@ package com.github.Dnkiss;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class Simulater {
-    public void keySimulater(int i){
+public class Simulator {
+    public void keySimulator(int i){
         try {
             Robot robot = new Robot();
             robot.keyPress(i);
@@ -19,7 +19,7 @@ public class Simulater {
         }
 
     }
-    public void mouseMoveSimulater(int x, int y){
+    public void mouseMoveSimulator(int x, int y){
         try {
             Robot robot = new Robot();
             robot.mouseMove(x,y);
