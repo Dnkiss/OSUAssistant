@@ -11,7 +11,7 @@ public class Read {
     private Queue<String> hitObject = new LinkedList<String>();
     private Queue<Float> X = new LinkedList<Float>();
     private Queue<Float> Y = new LinkedList<Float>();
-    private Queue<Float> time = new LinkedList<Float>();
+    private Queue<Long> time = new LinkedList<Long>();
 
     Read(String file){
         setFile(file);
@@ -35,13 +35,14 @@ public class Read {
                             StandardCharsets.UTF_8));
             X.clear();
             Y.clear();
+            time.clear();
             while((str = br.readLine()) != null){
                 hitObject.add(str);
                 String substring = str.substring(0,str.length()-1);
                 String[] result = substring.split(",");
                 X.add(Float.valueOf(result[0]));
                 Y.add(Float.valueOf(result[1]));
-                time.add(Float.valueOf(result[2]));
+                time.add(Long.valueOf(result[2]));
             }
             br.close();
         }catch(Exception e){

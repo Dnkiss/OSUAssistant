@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 public class Windows extends JFrame {
     JFrame jf = new JFrame("OSUAssistant by.Dnkiss");;
     JButton moveButton = new JButton();
+    JButton autoButton = new JButton();
     JPanel jp = new JPanel();
     JLabel jl = new JLabel();
     public Windows(){
@@ -31,8 +32,26 @@ public class Windows extends JFrame {
                 jfmove.setVisible(true);
             }
         });
+        autoButton.setText("自动模式");
+        autoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Executor executor = new Executor();
+                executor.autoClickAndMove();
+                jf.setVisible(false);
+                jl.setText("按F开始，按R复位");
+                jl.setHorizontalAlignment(SwingConstants.CENTER);
+                JFrame jfmove = new JFrame("OSUAssistant by,Dnkiss");
+                jfmove.add(jl);
+                jfmove.setLocationRelativeTo(null);
+                jfmove.setSize(500,300);
+                jfmove.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                jfmove.setVisible(true);
+            }
+        });
 
         jp.add(moveButton);
+        jp.add(autoButton);
         jf.setContentPane(jp);
         jf.setVisible(true);
     }
