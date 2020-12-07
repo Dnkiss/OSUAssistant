@@ -44,16 +44,10 @@ public class Read {
                 String[] result = substring.split(",");
                 X.add((int)((Float.parseFloat(result[0])+180)*2.2));
                 Y.add((int)((Float.parseFloat(result[1])+82)*2.2));
-                if(Long.parseLong(result[2])<=99999) {
-                    if(t1 == 0){
-                        t1 = Long.parseLong(result[2]);
-                    }
-                    time.add(Long.parseLong(result[2]) - t1);
+                if(t1 == 0){
+                    t1 = Long.parseLong(result[2]);
                 }
-                else{
-                    time.add(Long.parseLong(result[2])/10000*60 + Long.parseLong(result[2])%10000 - t1);
-                    t1 = Long.parseLong(result[2])/10000*60 + Long.parseLong(result[2])%10000;
-                }
+                time.add(Long.parseLong(result[2]) - t1);
             }
             br.close();
         }catch(Exception e){

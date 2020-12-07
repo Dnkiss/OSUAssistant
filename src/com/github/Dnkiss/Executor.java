@@ -50,6 +50,56 @@ public class Executor {
         });
     }
 
+    public void autoClick(){
+        JIntellitype.getInstance().registerHotKey(1, 0,'F');
+        JIntellitype.getInstance().registerHotKey(2, 0,'R');
+        JIntellitype.getInstance().registerHotKey(3, 0,'S');
+        Timer timer = new Timer();
+        JIntellitype.getInstance().addHotKeyListener(new HotkeyListener() {
+            @Override
+            public void onHotKey(int markCode) {
+                switch (markCode){
+                    case 1:
+                        Thread td = new Thread(()->{
+                            time = getTimestamp(new Date());
+                            while(read.getTime().peek()!=null){
+                                long t= getTimestamp(new Date());
+                                if((long)read.getTime().peek()<=t - time){
+                                    simulator.keySimulator('W');
+                                    read.getTime().poll();
+                                    try {
+                                        Thread.sleep(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        });
+                        td.start();
+                        JIntellitype.getInstance().addHotKeyListener(new HotkeyListener() {
+                            @Override
+                            public void onHotKey(int i) {
+                                if(i == 3){
+                                    td.stop();
+                                }
+                            }
+                        });
+                        break;
+                    case 2:
+                        read.setFile("D:/osu.txt");
+                        if(read.getTime().peek()!=null){
+                            time  = (long)read.getTime().poll();
+                        }
+                        else{
+                            System.out.println("读取文件内时间失败");
+                        }
+                        System.out.println("重新录入完成");
+                        break;
+                }
+            }
+        });
+    }
+
     public void autoClickAndMove(){
         JIntellitype.getInstance().registerHotKey(1, 0,'F');
         JIntellitype.getInstance().registerHotKey(2, 0,'R');
