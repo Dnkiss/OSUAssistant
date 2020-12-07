@@ -29,14 +29,15 @@ public class Read {
 
     public void setFile(String file){
         try{
+            X.clear();
+            Y.clear();
+            time.clear();
+            time.add((long) 0);
             String str;
             BufferedReader br = new BufferedReader(new InputStreamReader
                     (new FileInputStream(new File(file)),
                             StandardCharsets.UTF_8));
             long t1 = 0;
-            X.clear();
-            Y.clear();
-            time.clear();
             while((str = br.readLine()) != null){
                 hitObject.add(str);
                 String substring = str.substring(0,str.length()-1);
@@ -45,7 +46,6 @@ public class Read {
                 Y.add((int)((Float.parseFloat(result[1])+82)*2.2));
                 if(Long.parseLong(result[2])<=99999) {
                     if(t1 == 0){
-                        time.clear();
                         t1 = Long.parseLong(result[2]);
                     }
                     time.add(Long.parseLong(result[2]) - t1);

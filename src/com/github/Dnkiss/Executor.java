@@ -62,13 +62,17 @@ public class Executor {
                     case 1:
                         Thread td = new Thread(()->{
                             time = getTimestamp(new Date());
-                            System.out.println(time);
                             while(read.getTime().peek()!=null){
                                 long t= getTimestamp(new Date());
                                 if((long)read.getTime().peek()<=t - time){
                                     simulator.mouseMoveSimulator((int)read.getX().poll(),(int)read.getY().poll());
                                     simulator.keySimulator('W');
                                     read.getTime().poll();
+                                    try {
+                                        Thread.sleep(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         });
@@ -90,8 +94,6 @@ public class Executor {
                         else{
                             System.out.println("读取文件内时间失败");
                         }
-                        read.getX().poll();
-                        read.getY().poll();
                         System.out.println("重新录入完成");
                         break;
                 }
