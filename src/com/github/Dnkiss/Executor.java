@@ -5,9 +5,6 @@ import com.melloware.jintellitype.JIntellitype;
 
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class Executor {
     public static Long getTimestamp(Date date){
@@ -18,7 +15,7 @@ public class Executor {
         return Long.valueOf(timestamp);
     }
 
-    private Read read = new Read("D:/osu.txt");
+    private Reader reader = new Reader("D:/osu.txt");
     private Simulator simulator = new Simulator();
     private long time = 0;
     public void autoMove(){
@@ -30,19 +27,19 @@ public class Executor {
             public void onHotKey(int markCode) {
                 switch (markCode){
                     case 1:
-                        if(read.getX().peek()!=null){
-                            simulator.mouseMoveSimulator((int)read.getX().poll(),(int)read.getY().poll());
+                        if(reader.getX().peek()!=null){
+                            simulator.mouseMoveSimulator((int) reader.getX().poll(),(int) reader.getY().poll());
                         }
-                        simulator.keySimulator('W');
+                        simulator.keySimulator('W',10);
                         break;
                     case 2:
-                        if(read.getX().peek()!=null){
-                            simulator.mouseMoveSimulator((int)read.getX().poll(),(int)read.getY().poll());
+                        if(reader.getX().peek()!=null){
+                            simulator.mouseMoveSimulator((int) reader.getX().poll(),(int) reader.getY().poll());
                         }
-                        simulator.keySimulator('E');
+                        simulator.keySimulator('E',10);
                         break;
                     case 3:
-                        read.setFile("D:/osu.txt");
+                        reader.setFile("D:/osu.txt");
                         System.out.println("重新录入完成");
                         break;
                 }
@@ -62,11 +59,12 @@ public class Executor {
                     case 1:
                         Thread td = new Thread(()->{
                             time = getTimestamp(new Date());
-                            while(read.getTime().peek()!=null){
+                            while(reader.getTime().peek()!=null){
                                 long t= getTimestamp(new Date());
-                                if((long)read.getTime().peek()<=t - time){
-                                    simulator.keySimulator('W');
-                                    read.getTime().poll();
+                                if((long) reader.getTime().peek()<=t - time){
+                                    System.out.println(reader.getLong().peek());
+                                    simulator.mouseClickSimulator((long) reader.getLong().poll());
+                                    reader.getTime().poll();
                                     try {
                                         Thread.sleep(1);
                                     } catch (InterruptedException e) {
@@ -86,9 +84,9 @@ public class Executor {
                         });
                         break;
                     case 2:
-                        read.setFile("D:/osu.txt");
-                        if(read.getTime().peek()!=null){
-                            time  = (long)read.getTime().poll();
+                        reader.setFile("D:/osu.txt");
+                        if(reader.getTime().peek()!=null){
+                            time  = (long) reader.getTime().poll();
                         }
                         else{
                             System.out.println("读取文件内时间失败");
@@ -112,12 +110,12 @@ public class Executor {
                     case 1:
                         Thread td = new Thread(()->{
                             time = getTimestamp(new Date());
-                            while(read.getTime().peek()!=null){
+                            while(reader.getTime().peek()!=null){
                                 long t= getTimestamp(new Date());
-                                if((long)read.getTime().peek()<=t - time){
-                                    simulator.mouseMoveSimulator((int)read.getX().poll(),(int)read.getY().poll());
-                                    simulator.keySimulator('W');
-                                    read.getTime().poll();
+                                if((long) reader.getTime().peek()<=t - time){
+                                    simulator.mouseMoveSimulator((int) reader.getX().poll(),(int) reader.getY().poll());
+                                    simulator.keySimulator('W',10);
+                                    reader.getTime().poll();
                                     try {
                                         Thread.sleep(1);
                                     } catch (InterruptedException e) {
@@ -137,9 +135,9 @@ public class Executor {
                         });
                         break;
                     case 2:
-                        read.setFile("D:/osu.txt");
-                        if(read.getTime().peek()!=null){
-                            time  = (long)read.getTime().poll();
+                        reader.setFile("D:/osu.txt");
+                        if(reader.getTime().peek()!=null){
+                            time  = (long) reader.getTime().poll();
                         }
                         else{
                             System.out.println("读取文件内时间失败");
